@@ -6,8 +6,11 @@
     <title>todayMenu</title>
 </head>
 <style>
+.main-title {
+    font-size: 3em;
+}
 h1 {
-    padding-bottom: 1em;
+    padding-bottom: 0.5em;
 }
 hr {
     margin-top: 0px;
@@ -16,6 +19,9 @@ hr {
 .myButton {
     font-size: 1.3em;
     padding: 0.2em 0.5em;
+}
+.firstButton {
+        border: 3px solid #333;
 }
 input[type='text'] {
     font-size: 1em;
@@ -30,8 +36,8 @@ input[type='text'] {
 }
 </style>
 <body>
-    <div><h1>오늘의 메뉴</h1></div>
-    <div><button class="myButton">제목을 녹색으로 바꾸기</button></div>
+    <div><h1 class="main-title">오늘의 메뉴</h1></div>
+    <div><button class="myButton firstButton">제목을 녹색으로 바꾸기</button></div>
     <div class="color-row">
         <h2 class="field_text">글자색입력</h2>
         <input type="text">
