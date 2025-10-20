@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="kor">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<<device-width>>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2 id="title_text">제목</h2>
+    <input type="text" id="username" value="">
+    <button id="save_btn">save</button>
+    <h3>아이디를 입력하세요.</h3>
+</body>
+</html>
+<script>
+    // window.onload는 문서가 로딩될 때 자동 실행
+    window.onload = function() {
+        document.getElementById('save_btn')
+        .addEventListener('click',()=> {
+            let n = document.getElementById('username').value
+            let t = document.getElementsByTagName('h3')[0]
+            if (n.length<4) {
+                t.innerHTML = '4이상'
+            } else {
+                t.innerHTML = n;
+            }
+            // t.innerHTML = n.value;
+        })
+    }
+</script>

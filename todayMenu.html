@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todayMenu</title>
+</head>
+<style>
+h1 {
+    padding-bottom: 1em;
+}
+hr {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.myButton {
+    font-size: 1.3em;
+    padding: 0.2em 0.5em;
+}
+input[type='text'] {
+    font-size: 1em;
+    width: 300px;
+    height: 40px;
+}
+.color-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+</style>
+<body>
+    <div><h1>오늘의 메뉴</h1></div>
+    <div><button class="myButton">제목을 녹색으로 바꾸기</button></div>
+    <div class="color-row">
+        <h2 class="field_text">글자색입력</h2>
+        <input type="text">
+        <button class="myButton">글자색바꾸기</button>
+    </div>
+    <hr>
+    <div class="color-row">
+        <h2 class="field_text">단어</h2>
+        <input type="text">
+        <button class="myButton">단어저장</button>
+    </div>
+    <hr>
+    <div><h3>* 단어가 출력 되요</h3></div>
+</body>
+</html>
+<script>
+    let button = document.getElementsByTagName('h2')
+        window.onload = function() {
+            let saveWords = [];  // 단어들을 저장할 배열 선언
+            let title = document.getElementsByTagName('h1')[0];
+            let firstInput = document.getElementsByTagName('input')[0];
+            let secInput = document.getElementsByTagName('input')[1];
+            let title_btn0 = document.getElementsByClassName('myButton')[0];
+            let title_btn1 = document.getElementsByClassName('myButton')[1];
+            let title_btn2 = document.getElementsByClassName('myButton')[2];
+            let repeat = document.getElementsByTagName('h3')[0];
+
+            title_btn0.addEventListener("click", ()=>{
+                title.style.color = 'green'
+            })
+            title_btn1.addEventListener("click", ()=>{
+                let value0 = firstInput.value;
+                title.style.color = value0
+            })
+            title_btn2.addEventListener("click", ()=>{
+                // let value1 = document.getElementsByTagName('input')[1].value;
+                // saveWords.push(value1);
+                // repeat.innerHTML = saveWords.join(', ');  // 단어들을 쉼표로 연결해 출력
+                let value1 = secInput.value;
+                repeat.innerHTML = value1
+            })
+        }
+</script>
