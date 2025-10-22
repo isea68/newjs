@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    let c = ['a', 'b', 'c', 'd']
+    function a(v) {
+        let k = 'human'
+        console.log(k, v)
+    }
+    const bb = (v)=>{
+        console.log(v)
+    }
+    c.forEach((v)=>{console.log(v)})
+    c.forEach((v)=>bb(v))
+    c.forEach(a)
+    c.forEach(bb)
+    bb(10)
+</script>

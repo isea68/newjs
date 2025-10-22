@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie</title>
+</head>
+<body>
+    <h1>영화 검색</h1>
+    <form action="" method="post">
+        영화검색 <input type="text" id="name">
+        <input type="button" value="검색" id="btn"><br>
+        <hr>
+        <span id="info">* 영화가 출력 되요 : </span>
+    </form>
+    
+</body>
+</html>
+<script>
+    window.onload=()=>{
+        const arr=['무도실무관', '극한직업', '부산행', '뷰티인사이드', '홈캠']
+        let rank=''
+        document.getElementById('btn')
+        .addEventListener('click', ()=>{
+            // alert('버턴 클릭')
+            let input = document.getElementById('name').value.trim()
+            let output = document.getElementById('info')
+            if (arr.includes(input)) {
+                rank = arr.findIndex(n=>n==input)
+                output.innerHTML += `<span>${rank+1}위 ${input}</span>&nbsp;&nbsp;`
+            } else {
+                alert('다시 검색해 주세요.')
+            }
+            // 입력 필드 초기화
+            document.getElementById('name').value = ''
+        })
+    }
+</script>
