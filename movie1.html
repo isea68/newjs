@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie</title>
+    <title>Document</title>
 </head>
 <body>
-    <h1>🌹영화 검색</h1>
+    <h1>❤ 영화 검색</h1>
     <form action="" method="post">
-        영화검색 <input type="text" id="name">
+        영화검색<input type="text" id="name">
+        <input type="button" value="제목검색" id="btn">
         <input type="button" value="검색" id="btn"><br>
         <hr>
-        <span id="info">* 영화가 출력 되요 : </span>
+        <!-- <span id="info">* 영화가 출력 되요 : </span> -->
+        <ul>
+            <li>부산행</li>
+        </ul>
     </form>
-    
 </body>
 </html>
 <script>
@@ -22,7 +25,6 @@
         let rank=''
         document.getElementById('btn')
         .addEventListener('click', ()=>{
-            // alert('버턴 클릭')
             let input = document.getElementById('name').value.trim()
             let output = document.getElementById('info')
             if (arr.includes(input)) {
@@ -31,8 +33,6 @@
             } else {
                 alert('다시 검색해 주세요.')
             }
-            // 입력 필드 초기화
-            document.getElementById('name').value = ''
         })
     }
 </script>

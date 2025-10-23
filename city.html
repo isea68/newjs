@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City</title>
+</head>
+<body>
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+</body>
+</html>
+<script>
+    // import Chart from 'chart.js/auto';
+    window.onload=()=>{
+        const ctx=document.getElementById('myChart').getContext('2d');
+        const cityPopulations = [
+            { city: "서울", population: 9728000 },
+            { city: "부산", population: 3404000 },
+            { city: "인천", population: 2941000 },
+            { city: "대구", population: 2392000 },
+            { city: "대전", population: 1475000 },
+            { city: "광주", population: 1456000 },
+            { city: "울산", population: 1123000 },
+            { city: "수원", population: 1194000 },
+            { city: "고양", population: 1082000 },
+            { city: "성남", population: 944000 }
+        ];
+        // 콘솔 로그로 데이터 확인
+        console.log(Array.isArray(cityPopulations)); // 
+        console.log(cityPopulations.length);         // 
+        console.log(cityPopulations[0].city);        // 
+        console.log(cityPopulations[0]);
+        cityPopulations.forEach(item => console.log(item.city));
+        const bigCities = cityPopulations.filter(item => item.population >= 2000000);
+        console.log(bigCities);
+        const cities = cityPopulations.map(item => item.city);
+        console.log(cities);
+
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: cityPopulations.map(item=>item.city),
+                datasets: [{
+                    label: '도시별 인구수 현황',
+                    data: cityPopulations.map(item=>item.population),
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(199, 199, 199, 1)',
+                        'rgba(83, 102, 255, 1)',
+                        'rgba(255, 99, 71, 1)',
+                        'rgba(50, 205, 50, 1)'
+                    ],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.5)',
+                        'rgba(153, 102, 255, 0.5)',
+                        'rgba(255, 159, 64, 0.5)',
+                        'rgba(199, 199, 199, 0.5)',
+                        'rgba(83, 102, 255, 0.5)',
+                        'rgba(255, 99, 71, 0.5)',
+                        'rgba(50, 205, 50, 0.5)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: '도시'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '인구수'
+                            }
+                        },
+                        // ticks: {
+                        //     callback: function(value, index, ticks) {
+                        //         return (value / 1000000).toFixed(1) + 'M';  // 백만단위로 표시
+                        //     }
+                        // }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    title: {
+                        display: true,
+                        text: '한국 주요 도시 인구 (2025년 추정)'
+                    }
+                }
+            }
+        });
+
+        // 검색어 : 자바스크립트 chart.js 라이브러리 활용방법
+        //  인공지능 프롬프트 : 자바스크립트 chart.js 라이브러리 활용방법 샘플코드 만들어 줘
+
+        // 샘플코드를 보고 다음 문제를 해결하세요
+        // 도시별 인원수를 막대그래프로 표현하세요
+    };
+</script>
