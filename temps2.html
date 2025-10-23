@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temprture2</title>
+</head>
+<body>
+    <h1>10월</h1>
+    <span>일일 평균 온도 현황</span>
+    <form action="" method="post">
+        <input type="button" value="12도 미만 일수" id="btn1"><br>
+        날짜 <input type="number" placeholder="숫자만 입력하세요" id="temp">
+        <input type="button" value="검색" id="btn2"><br>
+        <hr>
+        <span id="info">* 검색결과 : </span>
+        <ul id="result"></ul>
+    </form>
+</body>
+</html>
+<script>
+    window.onload=()=>{
+        const octoberAvgTemps = [
+            17.3, 16.8, 16.5, 16.0, 15.5, 15.2, 15.0,
+            14.8, 14.5, 14.3, 14.0, 13.8, 13.5, 13.3,
+            13.0, 12.8, 12.6, 12.5, 12.3, 12.1, 11.9,
+            11.7, 11.6, 11.5, 11.3, 11.2, 11.1, 11.0,
+            10.9, 10.8, 10.7
+        ];
+        //서비스1
+        document.getElementById('btn1')
+        .addEventListener('click', ()=>{
+            let datenum=octoberAvgTemps.filter(n=>n<12).length
+            let output = document.getElementById('info')
+            output.innerHTML = `<span>${datenum}</span>`
+        })
+
+        //서비스2
+        // document.getElementById('btn3')
+        // .addEventListener('click', ()=>{
+        //     let input = document.getElementById('temp').value.trim()
+        //     let output = document.getElementById('info')
+
+        //     let filtered = octoberAvgTemps.filter(n=>n<input && n>input-1).sort((a,b)=>a-b)
+        //     // let s = filtered.length > 0 ? filtered[0] : '해당 값 없음'  //필터값이 undefined일 경우
+        //     output.innerHTML = `<span>${filtered}</span>`
+        // })
+
+        //서비스2-1
+        document.getElementById('btn2')
+        .addEventListener('click', ()=>{
+            let input = document.getElementById('temp').value
+            const ul = document.getElementById('result')
+            let output = document.getElementById('info')
+
+            // 기존 결과 초기화
+            ul.innerHTML = '';
+            output.innerHTML = '* 검색결과 : ';
+
+            // 입력값 검증
+            if (!input || isNAn(input) || input < 0 || !Number.isInteger(parseFloat(input))) {
+                alert('유효한 양의 정수를 입력하세요.')
+                return;
+            }
+
+            const inputTemp = parseInt(input);
+            let matches = octoberAvgTemps
+                .map((temp, index) => ({temp, date:index+1}))
+                .filter(({temp})=>temp>=inputTemp && temp < inputTemp+1);
+                // let objFilter = obj.filter(e => e<input+1 && e>input)
+
+            if (matches.length > 0) {
+                matches.forEach(({temp, date})=>{
+                    const li = document.createElement('li')
+                    li.textContent = `날짜: ${e.date}일, 온도: ${e.title}°C`
+                    ul.appendChild(li)
+                });
+                output.innerHTML = `* 검색결과 : ${matches.length}개 날짜`
+            } else {
+                    alert(`입력한 정수(${inputTemp})로 시작하는 온도(예: ${inputTemp}.0 ~ ${inputTemp}.9)가 없습니다.`);
+                }
+            })
+
+        //서비스3 : 숫자만 입력하도록 예외처리
+        // document.getElementById('temp')
+        // .addEventListener('input', (e) => {
+        //    const value = e.target.value;
+        //    const error = document.getElementById('error')
+        //     if (!/^\d*\.?\d*$/.test(value)) { // 숫자와 소수점만 허용
+        //         e.target.value = value.replace(/[^0-9.]/g, ''); // 숫자 외 문자 제거
+        //         error.textContent = '숫자와 소수점만 입력하세요.'
+        //     } else {
+        //         error.textContent = ''
+        //     }
+        // })
+    }
+</script>
