@@ -36,7 +36,7 @@
         })
 
         //서비스2
-        // document.getElementById('btn3')
+        // document.getElementById('btn2')
         // .addEventListener('click', ()=>{
         //     let input = document.getElementById('temp').value.trim()
         //     let output = document.getElementById('info')
@@ -58,7 +58,7 @@
             output.innerHTML = '* 검색결과 : ';
 
             // 입력값 검증
-            if (!input || isNAn(input) || input < 0 || !Number.isInteger(parseFloat(input))) {
+            if (!input || isNaN(input) || parseFloat(input) < 0 || !Number.isInteger(parseFloat(input))) {
                 alert('유효한 양의 정수를 입력하세요.')
                 return;
             }
@@ -72,7 +72,7 @@
             if (matches.length > 0) {
                 matches.forEach(({temp, date})=>{
                     const li = document.createElement('li')
-                    li.textContent = `날짜: ${e.date}일, 온도: ${e.title}°C`
+                    li.textContent = `날짜: ${date}일, 온도: ${temp}°C`
                     ul.appendChild(li)
                 });
                 output.innerHTML = `* 검색결과 : ${matches.length}개 날짜`

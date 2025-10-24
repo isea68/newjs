@@ -1,0 +1,31 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.list {
+    width: 45%;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.title-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.title-item span {
+    flex: 1;
+}
+
+input {
+    margin-right: 10px;
+}

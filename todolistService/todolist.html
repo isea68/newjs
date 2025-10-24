@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>나의 TodoList</title>
+  <link rel="stylesheet" href="./todolist.css">
+</head>
+<body>
+
+<h2>나의 Todo LIST</h2>
+<input type="text" id="titleInput" placeholder="목록 이름">
+<input type="number" id="dateInput" placeholder="날짜(YYYY/MM/DD)">
+<button onclick="addTitle()">추가</button>
+<button onclick="sortTitles()">정렬</button>
+
+<div class="container">
+  <div class="list" style="width: 300px;">
+    <h3>전체 목록</h3>
+    <div id="titleList"></div>
+  </div>
+  <div class="list" style="width: 200px;">
+    <h3>선택된 목록</h3>
+    <div id="selectedList"></div>
+  </div>
+  <div class="list" style="width: 200px;"> <!-- 전체 가로 길이, 위쪽 여백 추가 -->
+    <h3>완료된 목록</h3>
+    <div id="completedList"></div>
+  </div>
+</div>
+
+<script type="module" src="./todolistscript.js">
+</script>
+
+</body>
+</html>
