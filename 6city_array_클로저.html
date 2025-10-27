@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>도시 인구 관리 (클로저 버전)</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .container { display: flex; justify-content: space-between; margin-top: 20px; }
+    .list { width: 45%; border: 1px solid #ccc; padding: 10px; }
+    .city-item { display: flex; justify-content: space-between; margin: 5px 0; }
+    .city-item span { flex: 1; }
+    input { margin-right: 10px; }
+  </style>
+</head>
+<body>
+
+<h2>도시와 인구수 등록</h2>
+<input type="text" id="cityInput" placeholder="도시 이름">
+<input type="number" id="populationInput" placeholder="인구수">
+<button id="addBtn">추가</button>
+
+<div class="container">
+  <div class="list">
+    <h3>전체 도시</h3>
+    <div id="cityList"></div>
+  </div>
+  <div class="list">
+    <h3>선택된 도시</h3>
+    <div id="selectedList"></div>
+  </div>
+</div>
+
+<script>
+  const CityManager = (function() {
+    // ----------------------------
+    // 🔒 private 변수 (클로저 내부)
+    // ----------------------------
+    const initialCities = [
+      { city: "서울", population: 9728000 },
+      { city: "부산", population: 3404000 },
+      { city: "인천", population: 2941000 },
+      { city: "대구", population: 2392000 },
+      { city: "대전", population: 1475000 },
+      { city: "광주", population: 1456000 },
+      { city: "울산", population: 1123000 },
+      { city: "수원", population: 1194000 },
+      { city: "고양", population: 1082000 },
+      { city: "성남", population: 944000 }
+    ];
+
+    let cityList = [...initialCities];
+    let selectedCities = [];
+
+    // ----------------------------
+    // 🔧 private 함수
+    // ----------------------------
+    function renderLists() {
+      const cityDiv = document.getElementById("cityList");
+      const selectedDiv = document.getElementById("selectedList");
+
+      cityDiv.innerHTML = "";
+      selectedDiv.innerHTML = "";
+
+      cityList.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "city-item";
+        div.innerHTML = `
+          <span>${item.city} (${item.population.toLocaleString()})</span>
+          <button data-index="${index}" class="select-btn">선택</button>
+        `;
+        cityDiv.appendChild(div);
+      });
+
+      selectedCities.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "city-item";
+        div.innerHTML = `
+          <span>${item.city} (${item.population.toLocaleString()})</span>
+          <button data-index="${index}" class="deselect-btn">해제</button>
+        `;
+        selectedDiv.appendChild(div);
+      });
+    }
+
+    function selectCity(index) {
+      selectedCities.push(cityList[index]);
+      cityList.splice(index, 1);
+      renderLists();
+    }
+
+    function deselectCity(index) {
+      cityList.push(selectedCities[index]);
+      selectedCities.splice(index, 1);
+      renderLists();
+    }
+
+    function addCity() {
+      const cityName = document.getElementById("cityInput").value.trim();
+      const population = parseInt(document.getElementById("populationInput").value);
+
+      if (!cityName || isNaN(population)) {
+        alert("도시 이름과 인구수를 모두 올바르게 입력하세요.");
+        return;
+      }
+
+      cityList.push({ city: cityName, population });
+      document.getElementById("cityInput").value = "";
+      document.getElementById("populationInput").value = "";
+      renderLists();
+    }
+
+    // ----------------------------
+    // 🎯 이벤트 위임 (동적 버튼 처리)
+    // ----------------------------
+    document.addEventListener("click", (e) => {
+      if (e.target.classList.contains("select-btn")) {
+        selectCity(e.target.dataset.index);
+      } else if (e.target.classList.contains("deselect-btn")) {
+        deselectCity(e.target.dataset.index);
+      }
+    });
+
+    // ----------------------------
+    // 🚀 초기 실행
+    // ----------------------------
+    renderLists();
+
+    // ----------------------------
+    // 🌍 public API
+    // ----------------------------
+    return {
+      addCity
+    };
+  })();
+
+  // 외부에서 접근 가능한 공개 함수
+  document.getElementById("addBtn").addEventListener("click", CityManager.addCity);
+</script>
+
+</body>
+</html>

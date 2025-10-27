@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>내년까지 할일 (클로저 버전)</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .container { display: flex; justify-content: space-between; margin-top: 20px; }
+    .list { width: 45%; border: 1px solid #ccc; padding: 10px; }
+    .title-item { display: flex; justify-content: space-between; margin: 5px 0; }
+    .title-item span { flex: 1; }
+    input { margin-right: 10px; }
+  </style>
+</head>
+<body>
+
+<h2>내가 이루고 싶은 것들</h2>
+<input type="text" id="titleInput" placeholder="하고 싶은 것">
+<input type="number" id="dateInput" placeholder="완료날짜">
+<button id="addBtn">추가</button>
+
+<div class="container">
+  <div class="list">
+    <h3>전체 목록</h3>
+    <div id="titleList"></div>
+  </div>
+  <div class="list">
+    <h3>하고 있는 것</h3>
+    <div id="selectedList"></div>
+  </div>
+  <div class="list">
+    <h3>완료된 것</h3>
+    <div id="completeList"></div>
+  </div>
+</div>
+
+<script>
+  const TitleManager = (function() {
+    // ----------------------------
+    // 🔒 private 변수 (클로저 내부)
+    // ----------------------------
+    const initialCities = [
+      { title: "정보처리기사 취득", date: '2025/04/24' },
+      { title: "취업", date: '2026/02/27' },
+      { title: "SQLD", date: '2026/04/03' },
+      { title: "ADsP", date: '2026/03/20' },
+      { title: "빅데이터 분석기사", date: '2026/04/24' }, // 날짜 수정
+      { title: "정보보안기사", date: '2026/05/08' },
+      { title: "여행", date: '2026/06/06' },
+      { title: "출간", date: '2026/12/31' },
+      { title: "사무실", date: '2028/12/31' },
+      { title: "시골한달살기(2회)", date: '2030/12/31' }
+    ];
+
+    let titleList = [...initialCities];
+    let selectedList = [];
+    let completeList = [];
+
+    // ----------------------------
+    // 🔧 private 함수
+    // ----------------------------
+    function renderLists() {
+      const titleDiv = document.getElementById("titleList");
+      const selectedDiv = document.getElementById("selectedList");
+      const completeDiv = document.getElementById("completeList");
+
+      titleDiv.innerHTML = "";
+      selectedDiv.innerHTML = "";
+      completeDiv.innerHTML = "";
+
+      titleList.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "title-item";
+        div.innerHTML = `
+          <span>${item.title} (${item.date})</span>
+          <button data-index="${index}" class="select-btn">선택</button>
+        `;
+        titleDiv.appendChild(div);
+      });
+
+      selectedList.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "title-item";
+        div.innerHTML = `
+          <span>${item.title} (${item.date})</span>
+          <button data-index="${index}" class="deselect-btn">해제</button>
+        `;
+        selectedDiv.appendChild(div);
+      });
+
+      completeList.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "title-item";
+        div.innerHTML = `
+          <span>${item.title} (${item.date})</span>
+        `;
+        completeDiv.appendChild(div);
+      });
+    }
+
+    function selectTitle(index) {
+      selectedList.push(titleList[index]);
+      titleList.splice(index, 1);
+      renderLists();
+    }
+
+    function deselectTitle(index) {
+      completeList.push(selectedList[index]);
+      selectedList.splice(index, 1);
+      renderLists();
+    }
+
+    function addTitle() {
+      const titleName = document.getElementById("titleInput").value.trim();
+      const date = document.getElementById("dateInput").value;
+
+      if (!titleName || isNaN(date)) {
+        alert("도시 이름과 인구수를 모두 올바르게 입력하세요.");
+        return;
+      }
+
+      titleList.push({ title: titleName, date });
+      document.getElementById("titleInput").value = "";
+      document.getElementById("dateInput").value = "";
+      renderLists();
+    }
+
+    // ----------------------------
+    // 🎯 이벤트 위임 (동적 버튼 처리)
+    // ----------------------------
+    document.addEventListener("click", (e) => {
+      if (e.target.classList.contains("select-btn")) {
+        selectTitle(e.target.dataset.index);
+      } else if (e.target.classList.contains("deselect-btn")) {
+        deselectTitle(e.target.dataset.index);
+      }
+    });
+
+    // ----------------------------
+    // 🚀 초기 실행
+    // ----------------------------
+    renderLists();
+
+    // ----------------------------
+    // 🌍 public API
+    // ----------------------------
+    return {
+      addTitle
+    };
+  })();
+
+  // 외부에서 접근 가능한 공개 함수
+  document.getElementById("addBtn").addEventListener("click", TitleManager.addTitle);
+</script>
+
+</body>
+</html>

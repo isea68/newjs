@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculation</title>
+</head>
+<body>
+    <h2>계산기</h2>
+    <h3>다음 소스를 분석하여 계산버튼을 누르면 오른쪽에 계산결과를 출력하시오</h3>
+    <input type="text" id="data_a">
+    <input type="text" id="data_b">
+    <select id="operation" required>
+        <option value="+">더하기</option>
+        <option value="-">빼기</option>
+        <option value="*">곱하기</option>
+        <option value="/">나누기</option>
+    </select>
+    <button id="cal_btn">계산</button>
+    <span id="result">[결과값]</span>
+</body>
+</html>
+<script>
+    document.getElementById('cal_btn').addEventListener('click',()=>{
+        const k = document.getElementById('operation').value
+        //alert(k)
+        let input1 = document.getElementById('data_a').value
+        input1 = parseInt(input1)
+        let input2 = document.getElementById('data_b').value
+        input2 = parseInt(input2)
+        let output = document.getElementById('result')
+
+        function calculator(i, j, f) { return f(i, j) }
+        function plus(i, j) {return i+j}
+        function minus(i, j) {return i-j}
+        function multiply(i, j) {return i*j}
+        function division(i, j) {return i/j}
+
+        if (k=="+") {
+            output.innerHTML = calculator(input1, input2, plus)
+        } else if (k=="-") {
+            output.innerHTML = calculator(input1, input2, minus)
+        }  else if (k=="*") {
+            output.innerHTML = calculator(input1, input2, multiply)
+        } else if (k=='/') {
+            output.innerHTML = calculator(input1, input2, division)
+        }
+
+    })
+
+</script>

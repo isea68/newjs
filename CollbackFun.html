@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    // let a=3, b=4;
+    // const sum = add(a, b);
+    // function add(num1, num2) {
+    //     return num1+num2;
+    // }
+    
+    // // const sum = add(a, b);
+    // console.log(sum)
+
+    
+    // const test = function () {
+    //     console.log('익명함수')
+    // }
+    // const test1 = (a) => {
+    //     console.log(a)
+    // }
+    // const test3 = (a, b) => console.log(a, b)
+
+    // test()
+    // test1('abc')
+    // test3('abe', 'def')
+    // test1('abc')
+
+    // const user = ['aaa', 'bbb', 'ccc']
+    // user.forEach((v, i) => {
+    //     console.log(i, v)
+    // })
+    // user.forEach(flist)  // flist가 콜백함수 즉, 소괄호가 없는 상태
+    // function flist(v, i) {
+    //     console.log(i, v)
+    // }
+    // user.forEach(flist)  // flist()는 콜 => 에러가 발생됨
+    // function flist(v, i) {
+    //     console.log(i, v)
+    // }
+    function aaa(f) { f() }
+    function a1(a, f) { f(a) }
+    function abc() {console.log('abc')}
+    function def() {console.log('def')}
+    
+    aaa(abc)
+    aaa(def)
+    // 콜백 함수는 뭔가 선행처리가 완료된 후 함수로 처리할 때 사용한다. 예를 들면 forEach에서 먼저 데이터를 가져온 후 함수를 처리해야 한다. 이때 콜백함수 사용
+    // 서버에서 데이터를 가져온 후 콜백함수 처리
+
+    // 콜백 함수 오류 코드
+    // setTimeout(console.log('aaa'), 1000);
+    // function print_a() {
+    //     console.log('aaa')
+    // }
+
+    // console.log('start1')
+    // setTimeout(print_a, 1000)
+    // console.log('end1')
+    // console.log('start2')
+    // setTimeout(print_a(), 1000)
+    // console.log('end2')
+
+    // 오늘 문제 : 함수에 대한 용어 이해 -> 응용
+    function aaa1(a, b, f) { return f(a, b) }
+    function add(a, b) { return a+b }
+    function minus(a, b) { return a-b }
+    let c = aaa1(10, 20, add)  // 위에 return이 필요한 이유는 변수로 받기 때문임
+    let d = aaa1(20, 5, minus)
+    console.log(c, d)
+</script>

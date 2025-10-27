@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    // 클로저 함수는 내부 변수를 외부에서 변경가능하며, 내부변수를 은긱화하는 함수이다.
+
+    function title() {
+        let title = "human"
+        function prt() {
+            console.log(title)
+        }
+        function setTitle(newt) {
+            title = newt
+        }
+        return {prt, setTitle}
+    }
+    const ti = title()
+    ti.prt()
+    ti.setTitle('ddd')
+    ti.prt()
+</script>
