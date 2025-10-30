@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>관심영화 등록하기</h2>
+    제목<input type="text" id="title"><br>
+    배우<input type="text" id="actor"><br>
+    줄거리<textarea id="story"></textarea><br>
+    <button id="save">등록</button>
+    <ul id="movieList"></ul>
+</body>
+</html>
+<script type="module">
+    import { Movie } from './obj_study_class.js';
+    const mlist = [];  // 영화들의 객체를 저장하기 위함
+    document.getElementById('save')
+    .addEventListener('click', ()=>{
+        //alert('aaa')
+        let title = document.getElementById('title').value.trim()
+        //alert(title)
+        let actor = document.getElementById('actor').value.trim()
+        let story = document.getElementById('story').value.trim()
+        //alert(title+actor+story)
+
+        let a = new Movie(title, actor, story)
+        mlist.push(a)
+        //console.log(mlist)
+        renderMovies()  // 호출 : 화면을 갱신
+
+        function renderMovies() {
+            // 1. 출력할 태그 객체 가져오기
+            let list = document.getElementById('movieList')
+            list.innerHTML = '';  //list객체의 내용을 초기화함
+            // 2. mlist의 배열을 순회하면서 출력
+            mlist.forEach((value, idx)=>{
+                //console.log(value)
+                const li = document.createElement("li")
+                //li.innerHTML = value.title+":"+value.actor
+                li.innerHTML=`${value.title} : ${value.actor}`
+                list.appendChild(li)
+            })
+        }
+    })
+</script>

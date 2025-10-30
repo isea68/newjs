@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    const list = []  //변수명 list, 초기값 배열타입
+    function make(i, j) {
+        const newObject = {
+            title:i,
+            info:j
+        }
+        list.push(newObject)
+    }
+    make('js', '스크립트언어')
+    make('oracle', '관계형 데이터베이스')
+    console.log(list)
+
+    // 함수로 객체를 만듦
+    function Movie(t, i) {
+        this.title=t;
+        this.info=i;
+        console.log(this.title, this.info)
+    }
+    Movie('비트1', '정우성1') //-> 콜을 해도 실행이 됨
+    const mlist = []
+    const m = new Movie('비트2', '정우성2')
+    console.log(m.title, m.info)
+    mlist.push(m)
+    //console.log(mlist)
+    m.title = '보물섬'
+    //console.log(mlist)
+    console.log(m.title, m.info)
+
+    // 클래스로 객체를 정의하고 만들어 보자
+    class Movie_c {
+        constructor(title, info) {
+            this.title=title;
+            this.info=info;
+        }
+        prt() {
+            console.log(this.title, this.info, 'prt 함수')
+        }
+    }
+    const m1 = new Movie_c('비트', '클래스로 만듦')
+    console.log(m1.title, m1.info)
+    m1.prt()  //m1 객체의 주소의 prt를 호출함
+</script>

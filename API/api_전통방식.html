@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    // 핵심용어 : API, 서버, 클라이언트, json, 서비스방식(동기/비동기)
+    // 동기 : 전화회선, 비동기 : 패킷방식 (오늘 개발될 소스코드)
+    // 전통방식은 XMLHttpRequest 객체를 사용한다.
+    // 구형 브라우저에서 많이 사용한 방식 : 고대 유물 코드
+
+    const xhr = new XMLHttpRequest();
+    // 클라이언트가 먼저 요청하는 게 순서
+    xhr.open('GET', 'http://192.168.0.7:8080/getMovie')
+    // 받는 것도 코딩
+    xhr.onload = () => {
+        if (xhr.status == 200) {
+            const data = JSON.parse(xhr.responseText);
+            console.log(data)
+            render(data)
+        } else {
+            console.error('에러', xhr.status)
+        }
+        
+    };
+    xhr.send();
+
+    function render(data) {
+        console.log(data)
+    }
+
+</script>

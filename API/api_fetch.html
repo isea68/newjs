@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    // 2번째 방식은 fetch 사용한 프로미스 방식
+    // 프로미스 방식은 첫번째가 성공하면, 두번째로 가고 두번째가 성공하면 세번째로 가고 꼴리를 계속 늘려가면서 작성하는 방식
+
+    // fetch('http://192.168.0.7:8080/getMovie')
+    //     .then((response) => {
+    //         if (!response.ok) {
+    //             console.log('서브 응답 없음')
+    //         } else {
+    //             let d = response.json(); // pending은 받는 중
+    //             console.log(d)
+    //             return d
+    //         }
+    //     })
+    //     .then((data) => {console.log(data)})
+    //     .catch((err) => {console.error(err)})
+
+    //fetch의 다른 사용법
+    fetch('http://192.168.0.7:8080/getMovie')
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
+</script>
+<script>
+    // fetch await를 이용한 방식... 가장 많이 사용함
+    // fetch 비동기 객체.. await 기다려줘
+    // 함수로 정의해서 호출하는 방식 코드
+
+    async function getData() {
+        try {
+            // 비동기로 서버랑 연결할 동안 기다려줘
+            const res = await fetch('http://192.168.0.7:8080/getMovie');
+            const data = await res.josn();  // 데이터를 받아서 json변환까지 기다려줘
+            // 이번에는 배열을 순환하면서 값을 가져오는 방식으로 코딩
+            data.forEach(element => {
+                //console.log(element)
+                console.log(element.title)
+            });
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    getData()
+</script>

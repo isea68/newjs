@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>영화 정보 수정</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 40px;
+    }
+    .movie-card {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 500px;
+    }
+    .movie-card h2 {
+      margin-top: 0;
+    }
+    .edit-btn {
+      margin-top: 15px;
+      padding: 8px 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .edit-btn:hover {
+      background: #0056b3;
+    }
+
+    /* 모달 스타일 */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 400px;
+    }
+    .modal-content h3 {
+      margin-top: 0;
+    }
+    .modal-content label {
+      display: block;
+      margin-top: 10px;
+    }
+    .modal-content input,
+    .modal-content textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .modal-buttons {
+      margin-top: 20px;
+      text-align: right;
+    }
+    .modal-buttons button {
+      padding: 8px 16px;
+      margin-left: 8px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .save-btn {
+      background: #28a745;
+      color: white;
+    }
+    .cancel-btn {
+      background: #6c757d;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 영화 카드 -->
+  <div class="movie-card" id="movieCard">
+    <h2 id="title"></h2>
+    <p><strong>감독:</strong> <span id="director"></span></p>
+    <p id="description"></p>
+    <button class="edit-btn" id="editBtn">수정</button>
+  </div>
+
+  <!-- 모달 -->
+  <div class="modal" id="editModal">
+    <div class="modal-content">
+      <h3>영화 정보 수정</h3>
+      <label>제목</label>
+      <input type="text" id="modalTitle" />
+
+      <label>감독</label>
+      <input type="text" id="modalDirector" />
+
+      <label>설명</label>
+      <textarea id="modalDescription" rows="4"></textarea>
+
+      <div class="modal-buttons">
+        <button class="cancel-btn" id="cancelBtn">취소</button>
+        <button class="save-btn" id="saveBtn">저장</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 영화 객체 정의
+    const movie = {
+      title: "인셉션",
+      director: "크리스토퍼 놀란",
+      description: "꿈 속에서 아이디어를 훔치는 도둑이 불가능한 임무를 맡는다."
+    };
+
+    // DOM 요소
+    const titleEl = document.getElementById("title");
+    const directorEl = document.getElementById("director");
+    const descriptionEl = document.getElementById("description");
+    const editBtn = document.getElementById("editBtn");
+    const modal = document.getElementById("editModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDirector = document.getElementById("modalDirector");
+    const modalDescription = document.getElementById("modalDescription");
+    const saveBtn = document.getElementById("saveBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
+
+    // 화면에 영화 정보 렌더링
+    function renderMovie() {
+      titleEl.textContent = movie.title;
+      directorEl.textContent = movie.director;
+      descriptionEl.textContent = movie.description;
+    }
+
+    // 모달 열기
+    editBtn.addEventListener("click", () => {
+      modalTitle.value = movie.title;
+      modalDirector.value = movie.director;
+      modalDescription.value = movie.description;
+      modal.style.display = "flex";
+    });
+
+    // 모달 닫기 (공통)
+    function closeModal() {
+      modal.style.display = "none";
+    }
+    cancelBtn.addEventListener("click", closeModal);
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // 저장
+    saveBtn.addEventListener("click", () => {
+      // 객체 업데이트
+      movie.title = modalTitle.value.trim();
+      movie.director = modalDirector.value.trim();
+      movie.description = modalDescription.value.trim();
+
+      // 화면 갱신
+      renderMovie();
+
+      // 모달 닫기
+      closeModal();
+    });
+
+    // 초기 렌더링
+    renderMovie();
+  </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<!-- 외부 라이브러리 설치 -->
+ <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    async function getData() {
+        try {
+            const res = await axios.get('http://192.168.0.7:8080/getMovie')
+            const data = res.data;  //axios는 자동으로 json파싱
+            console.log(data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+    getData()
+</script>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./consult.css">
+    <title>Psychology Consulting</title>
+</head>
+<body>
+    <div class="wrapgrid">
+        <label for="name">이름</label>
+        <input type="text" id="name" placeholder="이름 입력">
+    </div>
+
+    <div class="wrapgrid">
+        <label for="age">나이</label>
+        <input type="number" id="age" placeholder="나이 입력 (정수)">
+    </div>
+
+    <div class="wrapgrid">
+        <label for="date">날짜</label>
+        <input type="text" id="date" placeholder="예: 2025/10/28">
+    </div>
+
+    <div class="wrapgrid full-width">
+        <label for="story">내용</label>
+        <textarea id="story" placeholder="상담 내용을 입력하세요"></textarea>
+    </div>
+
+    <!-- 버튼 중앙 정렬 -->
+    <div class="button-container">
+        <button id="save">등록</button>
+    </div>
+
+    <h3 class="wrapper">등록내용</h3>
+    <div class="output-container">
+        <ul id="consultList"></ul>
+    </div>
+</body>
+
+</html>
+<script type="module">
+    import { Consult } from './consult_class.js';
+
+    const conlist = [];
+
+    // 전역으로 renderConsulting 함수 정의
+    function renderConsulting() {
+        const list = document.getElementById('consultList');
+        list.innerHTML = ''; // 초기화
+
+        conlist.forEach((value, idx) => {
+            const li = document.createElement('li');
+            li.className = 'consult-item';
+
+            // 고유한 ID 생성
+            const checkboxId = `check-${idx}`;
+
+            // innerHTML에서 백틱 + 변수 사용 (정상 작동)
+            li.innerHTML = `
+                <label class="checkbox-label">
+                    <input type="checkbox" class="strike-checkbox" id="${checkboxId}">
+                    <span class="checkmark"></span>
+                </label>
+                <div class="content">
+                    <strong>${value.name}</strong>, ${value.age}세<br>
+                    <strong>${value.date}</strong><br>
+                    ${value.story.replace(/\n/g, '<br>')}
+                </div>
+            `;
+
+            list.appendChild(li);
+        });
+    }
+
+    // 등록 버튼 이벤트
+    document.getElementById('save').addEventListener('click', () => {
+        const name = document.getElementById('name').value.trim();
+        const age = document.getElementById('age').value.trim();
+        const date = document.getElementById('date').value.trim();
+        const story = document.getElementById('story').value.trim();
+
+        if (!name || !age || !date || !story) {
+            alert('모든 항목을 입력하세요!');
+            return;
+        }
+
+        const obj = new Consult(name, age, date, story);
+        conlist.push(obj);
+        renderConsulting(); // 호출
+
+        // 입력 초기화
+        document.getElementById('name').value = '';
+        document.getElementById('age').value = '';
+        document.getElementById('date').value = '';
+        document.getElementById('story').value = '';
+    });
+
+    // 이벤트 위임: 체크박스 클릭 시 취소선
+    document.getElementById('consultList').addEventListener('change', function(e) {
+        if (e.target.classList.contains('strike-checkbox')) {
+            const content = e.target.closest('li').querySelector('.content');
+            if (e.target.checked) {
+                content.style.textDecoration = 'line-through';
+                content.style.opacity = '0.6';
+            } else {
+                content.style.textDecoration = 'none';
+                content.style.opacity = '1';
+            }
+        }
+    });
+
+</script>

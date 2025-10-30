@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<!-- 라이브러리 설치 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $.ajax({  //$가 jquery문법, ajax는 비동기처리
+        url: 'http://192.168.0.7:8080/getMovie',
+        type: 'GET',
+        dataType: 'json',
+        success:(data)=>{
+            console.log('성공')
+            console.log(data)
+        },
+        error:()=>{
+            console.error(err)
+        }
+    })
+</script>
