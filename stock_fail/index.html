@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2025-11-01 주가 캔들스틱</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+  <h1>2025-11-01 주가 캔들스틱 차트</h1>
+  <p class="info">종목별 시가·고가·저가·종가 (OHLC)</p>
+
+  <div class="chart-container">
+    <canvas id="candlestickChart"></canvas>
+  </div>
+
+  <!-- 1. Chart.js 본체 (먼저 로드) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+
+  <!-- 2. chartjs-chart-financial (나중에 로드) -->
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.1/dist/chartjs-chart-financial.min.js"></script>
+
+  <!-- 3. store.js -->
+  <script src="./store.js"></script>
+
+  <!-- 4. candlestickChart.js -->
+  <script src="./candlestickChart.js"></script>
+
+</body>
+</html>

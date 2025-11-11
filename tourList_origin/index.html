@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>여행지 검색 시스템</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+  <div class="container">
+    <h1>여행지 검색 시스템</h1>
+
+    <div class="search-section">
+      <div class="search-label">검색항목</div>
+      <div class="search-row">
+        <div class="search-item">
+          <label for="date">날짜</label>
+          <select id="date"><option value="">전체</option></select>
+        </div>
+        <div class="search-item">
+          <label for="region">지역</label>
+          <select id="region"><option value="">전체</option></select>
+        </div>
+        <div class="search-item">
+          <label for="tourist_spot">관광지</label>
+          <select id="tourist_spot"><option value="">전체</option></select>
+        </div>
+        <div class="search-item">
+          <label for="transportation">교통수단</label>
+          <select id="transportation"><option value="">전체</option></select>
+        </div>
+        <div class="search-item">
+          <label for="weather">날씨</label>
+          <select id="weather"><option value="">전체</option></select>
+        </div>
+        <div class="search-item">
+          <label for="purpose">여행목적</label>
+          <select id="purpose"><option value="">전체</option></select>
+        </div>
+        <div style="display: flex; align-items: end;">
+          <button class="search-btn" id="searchBtn">검색</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-section">
+      <table id="resultsTable">
+        <thead>
+          <tr>
+            <th>날짜</th>
+            <th>지역</th>
+            <th>관광지</th>
+            <th>인원</th>
+            <th>소개</th>
+            <th>교통수단</th>
+            <th>날씨</th>
+            <th>지출(원)</th>
+            <th>목적</th>
+            <th>체류시간</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div id="noResults" class="no-data">로딩 중...</div>
+    </div>
+
+    <div class="footer">
+      총 <span id="totalCount">0</span>건의 여행 데이터
+    </div>
+  </div>
+
+  <script type="module">
+    import { fetchTravelData } from './api.js';
+
+    // 전역 변수
+    let travelData = [];
+
+    // 고유값 추출
+    function getUniqueValues(key) {
+      return [...new Set(travelData.map(item => item[key]))].sort();
+    }
+
+    // 콤보박스 초기화
+    function initFilters() {
+      const filters = {
+        date: getUniqueValues('date'),
+        region: getUniqueValues('region'),
+        tourist_spot: getUniqueValues('tourist_spot'),
+        transportation: getUniqueValues('transportation'),
+        weather: getUniqueValues('weather'),
+        purpose: getUniqueValues('purpose')
+      };
+
+      Object.keys(filters).forEach(key => {
+        const select = document.getElementById(key);
+        select.innerHTML = '<option value="">전체</option>'; // 초기화
+        filters[key].forEach(value => {
+          const option = document.createElement('option');
+          option.value = value;
+          option.textContent = value;
+          select.appendChild(option);
+        });
+      });
+
+      document.getElementById('totalCount').textContent = travelData.length;
+    }
+
+    // 검색 실행
+    function performSearch() {
+      const conditions = {
+        date: document.getElementById('date').value,
+        region: document.getElementById('region').value,
+        tourist_spot: document.getElementById('tourist_spot').value,
+        transportation: document.getElementById('transportation').value,
+        weather: document.getElementById('weather').value,
+        purpose: document.getElementById('purpose').value
+      };
+
+      const filtered = travelData.filter(item => {
+        return Object.keys(conditions).every(key => {
+          return !conditions[key] || item[key] === conditions[key];
+        });
+      });
+
+      displayResults(filtered);
+    }
+
+    // 결과 표시
+    function displayResults(data) {
+      const tbody = document.querySelector('#resultsTable tbody');
+      const noResults = document.getElementById('noResults');
+      tbody.innerHTML = '';
+
+      if (data.length === 0) {
+        noResults.textContent = '검색 결과가 없습니다.';
+        noResults.style.display = 'block';
+        return;
+      }
+
+      noResults.style.display = 'none';
+
+      data.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${item.date}</td>
+          <td>${item.region}</td>
+          <td>${item.tourist_spot}</td>
+          <td>${item.people}명</td>
+          <td>${item.introduction}</td>
+          <td>${item.transportation}</td>
+          <td>${item.weather}</td>
+          <td>${item.spending.toLocaleString()}원</td>
+          <td>${item.purpose}</td>
+          <td>${item.stay_time}시간</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // === 초기화: 서버에서 데이터 로드 ===
+    async function initApp() {
+      const noResults = document.getElementById('noResults');
+      noResults.textContent = '데이터 로딩 중...';
+
+      travelData = await fetchTravelData();
+
+      if (travelData.length === 0) {
+        noResults.textContent = '데이터를 불러오지 못했습니다.';
+        return;
+      }
+
+      noResults.style.display = 'none';
+      initFilters();
+      displayResults([]); // 초기엔 헤더만
+      document.getElementById('searchBtn').addEventListener('click', performSearch);
+    }
+
+    // DOM 로드 후 실행
+    document.addEventListener('DOMContentLoaded', initApp);
+  </script>
+
+</body>
+</html>
